@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sesoc.csignup.dao.CourseMapper">
+
+	<select id="courseList" parameterType="map" resultType="CourseVO">
+		select * from ccourse where
+		<choose>
+			<when test="searchItem=='courseNum'">courseNum</when>
+			<when test="searchItem=='courseName'">courseName</when>
+			<when test="searchItem=='grade'">grade</when>
+			<when test="searchItem=='professor'">professor</when>
+		</choose>
+			like '%'||#{searchKeyword}||'%'
+		order by courseNum asc
+	</select>
+	
+	<select id="courseListTemp" parameterType="map" resultType="CourseVO">
+		select * from ccourse where
+		<choose>
+			<when test="searchItem=='courseNum'">courseNum</when>
+			<when test="searchItem=='courseName'">courseName</when>
+			<when test="searchItem=='grade'">grade</when>
+			<when test="searchItem=='professor'">professor</when>
+		</choose>
+			like '%'||#{searchKeyword}||'%'
+		order by courseNum asc
+	</select>
+	
+	<select id="courseSignupForm" parameterType="map" resultType="CourseVO">
+		select * from ccourse where
+		<choose>
+			<when test="searchItem=='courseNum'">courseNum</when>
+			<when test="searchItem=='courseName'">courseName</when>
+			<when test="searchItem=='grade'">grade</when>
+			<when test="searchItem=='professor'">professor</when>
+		</choose>
+			like '%'||#{searchKeyword}||'%'
+		order by courseNum asc
+	</select>
+	
+	<insert id="enrollCourse" parameterType="EnrollVO">
+		insert into cenroll values(#{stNum},#{stName},#{courseNum},#{courseName})
+	</insert>
+	
+	<update id="minusCapacity" parameterType="int">
+		update ccourse set capacity = capacity-1 where courseNum=#{courseNum}
+	</update>
+	
+	<insert id="cancelCourse" parameterType="EnrollVO">
+		delete cenroll where stNum=#{stNum} and stName=#{stName} and courseNum=#{courseNum} and courseName=#{courseName}
+	</insert>
+	
+	<update id="plusCapacity" parameterType="int">
+		update ccourse set capacity = capacity+1 where courseNum=#{courseNum}
+	</update>
+	
+	<select id="enrollList" parameterType="int" resultType="EnrollVO">
+		select * from cenroll where stNum=#{stNum}
+	</select>
+	
+	<select id="countStudentEnrolled" parameterType="EnrollVO" resultType="int">
+		select count(*) from cenroll where stNum=#{stNum} and stName=#{stName} and courseNum=#{courseNum} and courseName=#{courseName}
+	</select>
+</mapper>

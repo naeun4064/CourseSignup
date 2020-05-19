@@ -1,0 +1,50 @@
+CREATE TABLE CSTUDENT (
+    stNum NUMBER PRIMARY KEY,
+    stName VARCHAR2(200) NOT NULL,
+    stNameEng VARCHAR2(200) NOT NULL,
+    major VARCHAR2(200) NOT NULL,
+    grade NUMBER NOT NULL
+);
+
+
+insert into cstudent values(105509, '최나은','ChoiNaEun', 'BusinessAdministration', 4);
+insert into cstudent values(105508, '최나은2','ChoiNaEun2','BusinessAdministration2', 4);
+
+
+CREATE TABLE CMEMBER (
+    userid VARCHAR2(10) PRIMARY KEY,
+    userpwd VARCHAR2(10) NOT NULL,
+    stNum NUMBER NOT NULL,
+
+    CONSTRAINT CMEMBER_FK FOREIGN KEY(stNum)
+    REFERENCES CSTUDENT(stNum) ON DELETE CASCADE
+);
+
+
+CREATE TABLE CCOURSE (
+    courseNum NUMBER PRIMARY KEY,
+    courseName VARCHAR2(2000) NOT NULL,
+    grade NUMBER NOT NULL,
+    capacity NUMBER NOT NULL,
+    professor VARCHAR2(2000) NOT NULL
+);
+
+
+insert into ccourse values(1,'Organizational theory',3,0,'BATTULGA ALTANTSETSEG');
+insert into ccourse values(2,'Personnel organization seminar',3,1,'BATTULGA ALTANTSETSEG');
+insert into ccourse values(3,'Production operation management',2,2,'LAU Ka Wing');
+insert into ccourse values(4,'Financial statement analysis',3,40,'KangByeong');
+insert into ccourse values(5,'Organizational development',4,60,'KangHye');
+
+CREATE TABLE CENROLL (
+    stNum NUMBER,
+    stName VARCHAR2(200) NOT NULL,
+    courseNum NUMBER,
+    courseName VARCHAR2(200) NOT NULL,
+    PRIMARY KEY(stNum,courseNum),
+
+    CONSTRAINT CENROLL_FK FOREIGN KEY(stNum)
+    REFERENCES CSTUDENT(stNum) ON DELETE CASCADE 
+);
+
+COMMIT;

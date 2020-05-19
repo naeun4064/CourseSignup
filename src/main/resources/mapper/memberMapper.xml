@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sesoc.csignup.dao.MemberMapper">
+
+<insert id="signup" parameterType="MemberVO">
+	insert into CMEMBER values(#{userid},#{userpwd},#{stNum})
+</insert>
+
+<select id="checkStNumfromStudent" parameterType="int" resultType="int">
+	select count(*) from CSTUDENT where stNum=#{stNum}
+</select>
+
+<select id="checkStNumfromMember" parameterType="int" resultType="int">
+	select count(*) from CMEMBER where stNum=#{stNum}
+</select>
+
+<select id="checkId" parameterType="String" resultType="int">
+	select count(*) from CMEMBER where userid=#{userid}
+</select>
+
+<select id="login" parameterType="MemberVO" resultType="int">
+	select count(*) from CMEMBER where userid=#{userid} and userpwd=#{userpwd}
+</select>
+
+<select id="readMember" parameterType="String" resultType="int">
+	select stNum from CMEMBER where userid=#{userid}
+</select>
+
+
+</mapper>
